@@ -42,12 +42,6 @@ RUN mkdir -p /media/localhost
 RUN chown $USER:$USER /media/localhost
 USER $USER
 
-RUN echo 'function prompt_command {' >> $HOME/.bashrc
-RUN echo '  PS1="\[\033[1;36m\]ExaequOS\[\e[0m\]:\[\033[1;33m\]${HOSTNAME}\[\e[0m\]:\[\033[1;34m\]${PWD}\[\e[0m\]$ "' >> $HOME/.bashrc
-RUN echo '}' >> $HOME/.bashrc
-RUN echo 'PROMPT_COMMAND=prompt_command' >> $HOME/.bashrc
-RUN echo 'if [ -f /usr/share/bash-completion/bash_completion ]; then . /usr/share/bash-completion/bash_completion; fi' >> $HOME/.bashrc
-
 ###############################################################################
 ### Download, compile and install ExaequOS repos.
 ###############################################################################
@@ -70,5 +64,10 @@ RUN (cd $HOME/binaryen && make install)
 ###
 ###############################################################################
 USER $USER
-ADD entrypoint.sh $HOME
-ENTRYPOINT [ "/home/exaequos/entrypoint.sh" ]
+
+RUN echo 'function prompt_command {' >> $HOME/.bashrc
+RUN echo '  PS1="\[\033[1;36m\]ExaequOS\[\e[0m\]:\[\033[1;33m\]${HOSTNAME}\[\e[0m\]:\[\033[1;34m\]${PWD}\[\e[0m\]$ "' >> $HOME/.bashrc
+RUN echo '}' >> $HOME/.bashrc
+RUN echo 'PROMPT_COMMAND=prompt_command' >> $HOME/.bashrc
+RUN echo 'if [ -f /usr/share/bash-completion/bash_completion ]; then . /usr/share/bash-completion/bash_completion; fi' >> $HOME/.bashrc
+RUN echo 'if [ "`ps -ef | grep -v grep | grep node`" == "" ]; then node /home/exaequos/emscripten-exa/third_party/server/server.js & fi' >> $HOME/.bashrc

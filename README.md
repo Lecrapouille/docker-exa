@@ -33,7 +33,7 @@ docker build -t exaequos .
 - Then call ExaequOS docker against your project:
 
 ```
-cd cd /home/John/Test
+cd /home/John/Test
 docker run -it -u $(id -u ${USER}):$(id -g ${USER}) -v $(pwd):$(pwd) -v ~/.cache/exaequos:/home/exaequos/emscripten-exa/cache -p 127.0.0.1:7777:7777 -w $(pwd) exaequos
 ```
 
@@ -91,10 +91,10 @@ Create in this folder an `exa.html` file with the following content (Replace `Te
 </html>
 ```
 
-Start server.js at parent directory of /media/locahost (build dir in this example)
+The ExaequOS server is normally started (`ps -aux node`). If not running, start it at parent directory of /media/locahost (build dir in this example)
 
 ```
-node /home/exaequos/emscripten-exa/third_party/server/server.js
+node /home/exaequos/emscripten-exa/third_party/server/server.js &
 ```
 
 ## Run app inside exaequos.com
